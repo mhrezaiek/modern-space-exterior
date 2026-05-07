@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ----------------------------------------------------------------
+   Modern Space Exterior — Apple-grade design tokens
+---------------------------------------------------------------- */
+
+@layer base {
+  :root {
+    --bg: 245 245 247;
+    --bg-elevated: 255 255 255;
+    --fg: 10 10 10;
+    --fg-muted: 110 110 115;
+    --border: 226 226 232;
+    --accent: 0 113 227;
+    --radius: 1.25rem;
+  }
+
+  .dark {
+    --bg: 10 10 10;
+    --bg-elevated: 22 22 23;
+    --fg: 245 245 247;
+    --fg-muted: 161 161 166;
+    --border: 38 38 43;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-white text-ink-900 selection:bg-ink-900 selection:text-white;
+    font-feature-settings: 'cv11', 'ss01', 'ss03';
+  }
+
+  /* Gentle focus ring (Apple style) */
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent/60 ring-offset-2 ring-offset-white;
+  }
+
+  /* Headings inherit display font + tight tracking */
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight text-ink-900;
+  }
+
+  /* Reduce motion for users who request it */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Apple-style glass nav */
+  .glass {
+    @apply bg-white/70 backdrop-blur-xl backdrop-saturate-150;
+    -webkit-backdrop-filter: saturate(180%) blur(24px);
+  }
+
+  .glass-dark {
+    @apply bg-ink-900/70 backdrop-blur-xl backdrop-saturate-150 text-white;
+  }
+
+  /* Eyebrow / kicker label */
+  .eyebrow {
+    @apply text-eyebrow uppercase text-ink-500;
+  }
+
+  /* Soft section divider that stays elegant */
+  .hairline {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-ink-200 to-transparent;
+  }
+
+  /* Card surface used across feature sections */
+  .surface {
+    @apply rounded-apple-lg border border-ink-100 bg-white shadow-apple-sm;
+  }
+
+  .surface-dark {
+    @apply rounded-apple-lg border border-white/5 bg-ink-800 text-white shadow-apple-glow;
+  }
+
+  /* Premium gradient text */
+  .text-gradient {
+    @apply bg-gradient-to-b from-ink-900 to-ink-500 bg-clip-text text-transparent;
+  }
+
+  .text-gradient-invert {
+    @apply bg-gradient-to-b from-white to-white/60 bg-clip-text text-transparent;
+  }
+}
+
+@layer utilities {
+  .anim-fade-up { animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+  .scrollbar-thin::-webkit-scrollbar { width: 8px; height: 8px; }
+  .scrollbar-thin::-webkit-scrollbar-thumb { @apply rounded-full bg-ink-200; }
+
+  .mask-fade-r {
+    -webkit-mask-image: linear-gradient(to right, black 80%, transparent);
+            mask-image: linear-gradient(to right, black 80%, transparent);
+  }
+
+  .ring-hairline { box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06); }
+}
