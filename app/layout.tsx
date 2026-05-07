@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { MobileCtaBar } from '@/components/layout/MobileCtaBar'
+import { ScrollProgress } from '@/components/motion/ScrollProgress'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { baseMetadata } from '@/lib/seo'
 import {
@@ -45,6 +46,7 @@ export default function RootLayout({
         >
           Skip to content
         </a>
+        <ScrollProgress />
         <Header />
         <main id="main" className="pt-16 md:pt-[68px]">
           {children}

@@ -1,10 +1,12 @@
 'use client'
 
 import * as Accordion from '@radix-ui/react-accordion'
-import { Plus } from 'lucide-react'
-import { Container, Section, SectionHeading } from '@/components/ui/section'
+import { Plus, ArrowRight, Phone } from 'lucide-react'
+import { Container, Section } from '@/components/ui/section'
+import { LinkButton } from '@/components/ui/button'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { faqSchema } from '@/lib/schema'
+import { business } from '@/lib/business'
 
 export const FAQS = [
   {
@@ -42,28 +44,76 @@ export const FAQS = [
 export function Faq() {
   return (
     <Section tone="cream" className="py-24 md:py-32" aria-labelledby="faq-title">
-      <Container size="narrow">
-        <SectionHeading
-          eyebrow="Common questions"
-          title="Answers, before you ask."
-          description="If your question isn’t covered, we typically respond inside two business hours."
-        />
+      <Container>
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+          {/* Left rail — heading + sticky CTA */}
+          <div className="lg:col-span-5">
+            <div className="lg:sticky lg:top-28">
+              <span className="text-eyebrow uppercase text-ink-500">
+                Common questions
+              </span>
+              <h2
+                id="faq-title"
+                className="mt-5 text-display-md text-gradient md:text-display-lg"
+              >
+                Answers, <br />
+                <span className="text-ink-400">before you ask.</span>
+              </h2>
+              <p className="mt-6 max-w-md text-[16px] leading-relaxed text-ink-500 md:text-lg">
+                If your question isn&rsquo;t covered, we typically respond inside two business hours.
+              </p>
 
-        <Accordion.Root type="multiple" className="mt-12 divide-y divide-ink-200 border-y border-ink-200">
-          {FAQS.map((f) => (
-            <Accordion.Item key={f.question} value={f.question}>
-              <Accordion.Header>
-                <Accordion.Trigger className="group flex w-full items-center justify-between gap-6 py-6 text-left text-lg font-semibold text-ink-900 transition-colors data-[state=open]:text-ink-900 md:text-xl">
-                  {f.question}
-                  <Plus className="h-5 w-5 shrink-0 transition-transform duration-300 group-data-[state=open]:rotate-45" />
-                </Accordion.Trigger>
-              </Accordion.Header>
-              <Accordion.Content className="overflow-hidden text-[16px] leading-relaxed text-ink-500 data-[state=closed]:animate-[accordion-up_0.25s_ease-out] data-[state=open]:animate-[accordion-down_0.3s_ease-out]">
-                <p className="pb-7 pr-10">{f.answer}</p>
-              </Accordion.Content>
-            </Accordion.Item>
-          ))}
-        </Accordion.Root>
+              {/* CTA card */}
+              <div className="mt-10 rounded-apple-lg border border-ink-100 bg-white p-6 shadow-apple-sm">
+                <p className="text-[13px] font-semibold uppercase tracking-[0.18em] text-ink-700">
+                  Still have a question?
+                </p>
+                <p className="mt-2 text-[15px] leading-relaxed text-ink-500">
+                  Call our team or send a quick scope and we&rsquo;ll have an
+                  answer for you the same day.
+                </p>
+                <div className="mt-5 flex flex-wrap gap-3">
+                  <LinkButton href="/contact" variant="primary" className="group">
+                    Ask the team
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  </LinkButton>
+                  <LinkButton href={`tel:${business.phone}`} variant="ghost">
+                    <Phone className="h-4 w-4" />
+                    {business.phoneDisplay}
+                  </LinkButton>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right rail — accordion */}
+          <div className="lg:col-span-7">
+            <Accordion.Root
+              type="multiple"
+              className="divide-y divide-ink-200 border-y border-ink-200"
+            >
+              {FAQS.map((f) => (
+                <Accordion.Item
+                  key={f.question}
+                  value={f.question}
+                  className="group/item transition-colors hover:bg-white/60"
+                >
+                  <Accordion.Header>
+                    <Accordion.Trigger className="group flex w-full items-center justify-between gap-6 py-6 text-left text-lg font-semibold text-ink-900 transition-colors data-[state=open]:text-ink-900 md:py-7 md:text-xl">
+                      {f.question}
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-ink-200 bg-white text-ink-700 transition-all duration-300 group-data-[state=open]:rotate-45 group-data-[state=open]:border-ink-900 group-data-[state=open]:bg-ink-900 group-data-[state=open]:text-white">
+                        <Plus className="h-4 w-4" />
+                      </span>
+                    </Accordion.Trigger>
+                  </Accordion.Header>
+                  <Accordion.Content className="overflow-hidden text-[16px] leading-relaxed text-ink-500 data-[state=closed]:animate-[accordion-up_0.25s_ease-out] data-[state=open]:animate-[accordion-down_0.3s_ease-out]">
+                    <p className="pb-7 pr-12">{f.answer}</p>
+                  </Accordion.Content>
+                </Accordion.Item>
+              ))}
+            </Accordion.Root>
+          </div>
+        </div>
       </Container>
       <JsonLd data={faqSchema(FAQS)} />
     </Section>
